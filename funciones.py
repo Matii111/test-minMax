@@ -14,6 +14,8 @@ print("╚═══════════════════════�
 
 
 
+
+
 #opcion de dificultad
 
 dificultad = input("Dificultad: ")
@@ -44,7 +46,7 @@ PROFUNDIDAD_IA = profundidad
 
 #opcion de tamaño
 
-tamanio = input("Tamano: ")
+tamanio = input("Ingrese tamaño puede ser 6x6 o 8x8: ")
 tamanio = tamanio.lower()
 
 
@@ -224,6 +226,7 @@ def minimax(tablero, TURNO_BLANCAS, busqueda_profundidad, alpha, beta):
         pass #Este pass sirve en caso de que no encuentre ninguna condicion de las anteriores para ganar
     
 
+
     if TURNO_BLANCAS:
         puntajemax = -1000
         mov_validos = REVISAR_MOV_VALIDOS(tablero, True)
@@ -293,12 +296,18 @@ def REVERSI():
             print("\n")
             best_val = float("-inf")
             best_move = None
+            tiempo = librerias.time.time()
             for m in mov_validos:
                 tablero_n = REALIZAR_MOV(tablero, m, True)
                 mov_v = minimax(tablero_n, True, PROFUNDIDAD_IA, float("-inf"), float("inf"))
                 if mov_v > best_val:
                     best_move = m
                     best_val = mov_v
+
+            final = librerias.time.time()
+
+            print("tiempo de espera de IA: ",final-tiempo)
+            print("\n")
             tablero = REALIZAR_MOV(tablero, best_move, True)
             DIBUJO_REVERSI()
             print("\n")
@@ -374,7 +383,7 @@ def MOV_JUGADOR(tablero, mov_validos):
                     linea += "•"
         print(linea)
     while True:
-        # entra en bucle hasta que encuentre que resiva un valor valido
+        # entra en bucle hasta que encuentre un valor valido para mostrar
         print("\n")
         opcion = input("Eliga su movimiento entre [0-" + str(len(mov_validos)-1) + "]")
         try:
